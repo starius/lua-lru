@@ -102,4 +102,18 @@ describe("LRU cache", function()
         end
     end)
 
+    it("frees a slot when removing an element", function()
+        local lru = require 'lru'
+        local l = lru(3)
+        l[1] = 1
+        l[2] = 2
+        l[3] = 3
+        l[3] = nil -- size is 2 here: {1, 2}
+        l[4] = 4
+        assert.equal(1, l[1])
+        assert.equal(2, l[2])
+        assert.equal(nil, l[3])
+        assert.equal(4, l[4])
+    end)
+
 end)

@@ -67,21 +67,30 @@ local function lru(max_size)
 
     local function set(_, key, value)
         local tuple = storage[key]
-        if tuple then
-            cut(tuple)
-        else
-            if size == max_size then
-                local oldest_key = oldest[KEY]
-                storage[oldest_key] = nil
-                cut(oldest)
-            else
-                size = size + 1
+        if value == nil then
+            -- the value is removed
+            if tuple then
+                storage[key] = nil
+                cut(tuple)
+                size = size - 1
             end
-            tuple = {nil, nil, nil, key}
+        else
+            if tuple then
+                cut(tuple)
+            else
+                if size == max_size then
+                    local oldest_key = oldest[KEY]
+                    storage[oldest_key] = nil
+                    cut(oldest)
+                else
+                    size = size + 1
+                end
+                tuple = {nil, nil, nil, key}
+            end
+            tuple[VALUE] = value
+            setNewest(tuple)
+            storage[key] = tuple
         end
-        tuple[VALUE] = value
-        setNewest(tuple)
-        storage[key] = tuple
     end
 
     local function mynext(storage1, prev_key)
