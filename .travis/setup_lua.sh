@@ -6,7 +6,7 @@
 # luajit2.0 - master v2.0
 # luajit2.1 - master v2.1
 
-set -eufo pipefail
+set -xeufo pipefail
 
 LUAJIT_BASE="LuaJIT-2.0.4"
 
