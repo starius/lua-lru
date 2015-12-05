@@ -104,12 +104,15 @@ local function lru(max_size)
     end
 
     local mt = {
-        __index = get,
-        __newindex = set,
+        __index = {
+            get = get,
+            set = set,
+            pairs = lru_pairs,
+        },
         __pairs = lru_pairs,
     }
 
-    return setmetatable({}, mt), lru_pairs
+    return setmetatable({}, mt)
 end
 
 return lru
