@@ -39,6 +39,13 @@ describe("LRU cache", function()
             map[key] = value
         end
         assert.same({foo="bar", foo1="bar1"}, map)
+        if _VERSION >= "Lua 5.2" then
+            local map = {}
+            for key, value in pairs(l) do
+                map[key] = value
+            end
+            assert.same({foo="bar", foo1="bar1"}, map)
+        end
     end)
 
     it("eliminates old elements", function()
