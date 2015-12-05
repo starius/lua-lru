@@ -116,4 +116,26 @@ describe("LRU cache", function()
         assert.equal(4, l:get(4))
     end)
 
+    it("optionally counts size in bytes", function()
+        local lru = require 'lru'
+        local l = lru(3, 100)
+        l:set(1, 1, 50)
+        l:set(2, 2, 50)
+        l:set(3, 3, 50)
+        assert.equal(nil, l:get(1))
+        assert.equal(2, l:get(2))
+        assert.equal(3, l:get(3))
+    end)
+
+    it("size in bytes is #length by default", function()
+        local lru = require 'lru'
+        local l = lru(3, 10)
+        l:set(1, "12345")
+        l:set(2, "67890")
+        l:set(3, "x")
+        assert.equal(nil, l:get(1))
+        assert.equal("67890", l:get(2))
+        assert.equal("x", l:get(3))
+    end)
+
 end)

@@ -1,8 +1,9 @@
 
-local function lru(max_size)
+local function lru(max_size, max_bytes)
 
     -- current size
     local size = 0
+    local bytes_used = 0
 
     -- storage is a hash mapping keys to tuples
     -- tuple: value, prev, next, key
@@ -14,6 +15,7 @@ local function lru(max_size)
     local PREV = 2
     local NEXT = 3
     local KEY = 4
+    local BYTES = 5
 
     -- newest and oldest are ends of double-linked list
     local newest = nil -- first
@@ -55,6 +57,22 @@ local function lru(max_size)
         end
     end
 
+    local function del(key, tuple)
+        storage[key] = nil
+        cut(tuple)
+        size = size - 1
+        bytes_used = bytes_used - (tuple[BYTES] or 0)
+    end
+
+    local function makeFreeSpace(bytes)
+        while size + 1 > max_size or
+            (max_bytes and bytes_used + bytes > max_bytes)
+        do
+            assert(oldest, "not enough storage for cache")
+            del(oldest[KEY], oldest)
+        end
+    end
+
     local function get(_, key)
         local tuple = storage[key]
         if not tuple then
@@ -65,31 +83,26 @@ local function lru(max_size)
         return tuple[VALUE]
     end
 
-    local function set(_, key, value)
+    local function set(_, key, value, bytes)
         local tuple = storage[key]
-        if value == nil then
-            -- the value is removed
-            if tuple then
-                storage[key] = nil
-                cut(tuple)
-                size = size - 1
-            end
-        else
-            if tuple then
-                cut(tuple)
-            else
-                if size == max_size then
-                    local oldest_key = oldest[KEY]
-                    storage[oldest_key] = nil
-                    cut(oldest)
-                else
-                    size = size + 1
-                end
-                tuple = {nil, nil, nil, key}
-            end
-            tuple[VALUE] = value
-            setNewest(tuple)
-            storage[key] = tuple
+        if tuple then
+            del(key, tuple)
+        end
+        if value ~= nil then
+            -- the value is not removed
+            bytes = max_bytes and (bytes or #value) or 0
+            makeFreeSpace(bytes)
+            local tuple1 = {
+                value,
+                nil,
+                nil,
+                key,
+                max_bytes and bytes,
+            }
+            size = size + 1
+            bytes_used = bytes_used + bytes
+            setNewest(tuple1)
+            storage[key] = tuple1
         end
     end
 
