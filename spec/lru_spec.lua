@@ -69,6 +69,12 @@ describe("LRU cache", function()
         assert.equal(4, l[4])
         assert.equal(2, l[2])
         assert.equal(5, l[5])
+        l[5] = 6 -- updates 5
+        assert.equal(nil, l[1])
+        assert.equal(nil, l[3])
+        assert.equal(4, l[4])
+        assert.equal(2, l[2])
+        assert.equal(6, l[5])
     end)
 
 end)
