@@ -92,7 +92,7 @@ describe("LRU cache", function()
         assert.equal(3, l:get(2))
     end)
 
-    it("doesn't leak memory #slow", function()
+    it("doesn't leak memory (large values) #slow", function()
         -- add many large strings (~100Gb)
         local lru = require 'lru'
         local l = lru.new(3)
@@ -100,7 +100,19 @@ describe("LRU cache", function()
         for i = 1, 100000 do
             local key = i
             local value = mib:sub(i)
-            l:set(i, value)
+            l:set(key, value)
+        end
+    end)
+
+    it("doesn't leak memory (large keys) #slow", function()
+        -- add many large strings (~100Gb)
+        local lru = require 'lru'
+        local l = lru.new(3)
+        local mib = ('x'):rep(1000000)
+        for i = 1, 100000 do
+            local key = mib:sub(i)
+            local value = i
+            l:set(key, value)
         end
     end)
 
