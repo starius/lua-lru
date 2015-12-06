@@ -34,12 +34,15 @@ end
 local cache = lru.new(1000)
 
 for i = 1, 1000000 do
+    local key
     for j = 1, 5 do
         local x = math.random(1, 10000)
         cache:set(x, x+1)
+        key = x
     end
     for j = 1, 5 do
         local x = math.random(1, 1000)
         cache:set(x, x+1)
     end
+    assert(cache:get(key) == key+1)
 end
