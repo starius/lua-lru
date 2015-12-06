@@ -7,6 +7,8 @@
 # download Lua-LRU-Cache
 [ ! -f LRUCache.lua ] && wget -O LRUCache.lua https://raw.githubusercontent.com/kenshinx/Lua-LRU-Cache/de2531481cf371f5472bbbd137a2545321e62e22/lru.lua
 
+lscpu
+
 luajit -v
 
 echo '--------'
