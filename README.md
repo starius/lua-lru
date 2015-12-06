@@ -130,7 +130,7 @@ user    0m15.797s
 sys     0m0.004s
 --------
 LRUCache.lua
-... too slow
+... too slow, waited for 10 hours
 ```
 
 [license]: https://img.shields.io/badge/License-MIT-brightgreen.png
