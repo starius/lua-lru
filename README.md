@@ -51,6 +51,8 @@ Methods:
     If `key` is not in `cache`, returns `nil`.
     Otherwise moves the element to the head of the queue.
 
+  * `cache:delete(key)` same as `cache:set(key, nil)`
+
   * `cache:pairs()` returns key-value iterator. Example:
 
     ```lua

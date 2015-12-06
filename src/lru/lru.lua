@@ -109,6 +109,10 @@ local function lru(max_size, max_bytes)
         end
     end
 
+    local function delete(_, key)
+        return set(_, key, nil)
+    end
+
     local function mynext(storage1, prev_key)
         local key, tuple = next(storage1, prev_key)
         return key, tuple and tuple[VALUE]
@@ -123,6 +127,7 @@ local function lru(max_size, max_bytes)
         __index = {
             get = get,
             set = set,
+            delete = delete,
             pairs = lru_pairs,
         },
         __pairs = lru_pairs,

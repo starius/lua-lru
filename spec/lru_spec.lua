@@ -118,6 +118,20 @@ describe("LRU cache", function()
         assert.equal(4, l:get(4))
     end)
 
+    it("has method `delete`", function()
+        local lru = require 'lru'
+        local l = lru(3)
+        l:set(1, 1)
+        l:set(2, 2)
+        l:set(3, 3)
+        l:delete(3)
+        l:set(4, 4)
+        assert.equal(1, l:get(1))
+        assert.equal(2, l:get(2))
+        assert.equal(nil, l:get(3))
+        assert.equal(4, l:get(4))
+    end)
+
     it("optionally counts size in bytes", function()
         local lru = require 'lru'
         local l = lru(3, 100)
