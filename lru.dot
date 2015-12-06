@@ -1,0 +1,59 @@
+digraph G {
+
+    subgraph cluster_map {
+        dir=TB
+        style = filled
+        color = lightgrey
+        label = "hash map"
+        node [style=filled,color=white]
+        key1
+        key2
+        key3
+        key4
+        key5
+    }
+
+    subgraph cluster_list {
+        dir=TB
+        color = blue
+        label = "doubly linked list"
+        node [style=filled];
+        tuple1
+        tuple2
+        tuple3
+        tuple4
+        tuple5
+    }
+
+    oldest [shape=Msquare]
+    newest [shape=Msquare]
+
+    newest -> tuple1
+
+    key1 -> key2 [style=invis]
+    key2 -> key3 [style=invis]
+    key3 -> key4 [style=invis]
+    key4 -> key5 [style=invis]
+
+    key1 -> tuple1
+    tuple1 -> key1
+    key2 -> tuple2
+    tuple2 -> key2
+    key3 -> tuple3
+    tuple3 -> key3
+    key4 -> tuple4
+    tuple4 -> key4
+    key5 -> tuple5
+    tuple5 -> key5
+
+    tuple1 -> tuple2
+    tuple2 -> tuple3
+    tuple2 -> tuple1
+    tuple3 -> tuple2
+    tuple3 -> tuple4
+    tuple4 -> tuple3
+    tuple4 -> tuple5
+    tuple5 -> tuple4
+
+    oldest -> tuple5
+}
