@@ -115,14 +115,23 @@ function lru.new(max_size, max_bytes)
         return set(_, key, nil)
     end
 
-    local function mynext(storage1, prev_key)
-        local key, tuple = next(storage1, prev_key)
-        return key, tuple and tuple[VALUE]
+    local function mynext(_, prev_key)
+        local tuple
+        if prev_key then
+            tuple = storage[prev_key][NEXT]
+        else
+            tuple = newest
+        end
+        if tuple then
+            return tuple[KEY], tuple[VALUE]
+        else
+            return nil
+        end
     end
 
     -- returns iterator for keys and values
     local function lru_pairs()
-        return mynext, storage, nil
+        return mynext, nil, nil
     end
 
     local mt = {
