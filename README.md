@@ -155,6 +155,21 @@ LRUCache.lua
 ... too slow, waited for 10 hours
 ```
 
+Both `lua-lru` and `resty-lru` are compiled by LuaJIT perfectly:
+
+```
+$ luajit -jp=v benchmark.lua lru
+75%  Compiled
+24%  Garbage Collector
+
+$ luajit -jp=v benchmark.lua lrucache
+92%  Compiled
+8%  Garbage Collector
+
+$ luajit -jp=v benchmark.lua pureffi
+98%  Compiled
+```
+
 [license]: https://img.shields.io/badge/License-MIT-brightgreen.png
 [travis]: https://travis-ci.org/starius/lua-lru
 [build-status]: https://travis-ci.org/starius/lua-lru.png
