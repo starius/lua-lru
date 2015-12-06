@@ -31,7 +31,7 @@ describe("LRU cache", function()
         assert.equal(nil, l:get("foo"))
     end)
 
-    it("iterates all elements", function()
+    it("#iterates all elements", function()
         local lru = require 'lru'
         local l = lru.new(100)
         l:set("foo", "bar")
