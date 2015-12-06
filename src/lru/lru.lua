@@ -26,6 +26,8 @@ function lru.new(max_size, max_bytes)
     local newest = nil -- first
     local oldest = nil -- last
 
+    local removed_tuple -- created in del(), removed in set()
+
     -- remove a tuple from linked list
     local function cut(tuple)
         local tuple_prev = tuple[PREV]
@@ -67,23 +69,17 @@ function lru.new(max_size, max_bytes)
         cut(tuple)
         size = size - 1
         bytes_used = bytes_used - (tuple[BYTES] or 0)
+        removed_tuple = tuple
     end
 
     -- removes elemenets to provide enough memory
     -- returns last removed element or nil
     local function makeFreeSpace(bytes)
-        local removed_tuple
         while size + 1 > max_size or
             (max_bytes and bytes_used + bytes > max_bytes)
         do
             assert(oldest, "not enough storage for cache")
-            removed_tuple = oldest
             del(oldest[KEY], oldest)
-        end
-        if removed_tuple then
-            removed_tuple[KEY] = nil
-            removed_tuple[VALUE] = nil
-            return removed_tuple
         end
     end
 
@@ -105,7 +101,7 @@ function lru.new(max_size, max_bytes)
         if value ~= nil then
             -- the value is not removed
             bytes = max_bytes and (bytes or #value) or 0
-            local removed_tuple = makeFreeSpace(bytes)
+            makeFreeSpace(bytes)
             local tuple1 = removed_tuple or {}
             tuple1[VALUE] = value
             tuple1[KEY] = key
@@ -115,6 +111,7 @@ function lru.new(max_size, max_bytes)
             setNewest(tuple1)
             storage[key] = tuple1
         end
+        removed_tuple = nil
     end
 
     local function delete(_, key)
