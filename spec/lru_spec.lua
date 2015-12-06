@@ -10,7 +10,7 @@ describe("LRU cache", function()
 
     it("creates lru", function()
         local lru = require 'lru'
-        local l = lru.new(100)
+        local _ = lru.new(100)
     end)
 
     it("is a map", function()
@@ -42,11 +42,11 @@ describe("LRU cache", function()
         end
         assert.same({foo="bar", foo1="bar1"}, map)
         if _VERSION >= "Lua 5.2" then
-            local map = {}
+            local map2 = {}
             for key, value in pairs(l) do
-                map[key] = value
+                map2[key] = value
             end
-            assert.same({foo="bar", foo1="bar1"}, map)
+            assert.same({foo="bar", foo1="bar1"}, map2)
         end
     end)
 
