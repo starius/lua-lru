@@ -138,4 +138,12 @@ describe("LRU cache", function()
         assert.equal("x", l:get(3))
     end)
 
+    it("throws if an element is too #large", function()
+        local lru = require 'lru'
+        local l = lru(3, 10)
+        assert.has_error(function()
+            l:set(1, "12345678901")
+        end)
+    end)
+
 end)
