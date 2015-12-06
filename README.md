@@ -96,6 +96,8 @@ This library (`lua-lru`) seems to be faster than
 
 The benchmark runs `cache:set` with random keys 1kk times,
 alternating ranges [1;1000] and [1;10000] with period 5.
+After [1;10000] range it calls `cache:get(key)` with last
+key from [1;1000] range and checks returned value.
 Source of the benchmark can be found in `benchmark/` directory.
 
 Results:
