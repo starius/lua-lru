@@ -1,4 +1,6 @@
-
+-- lua-lru, LRU cache in Lua
+-- Copyright (c) 2015 Boris Nagaev
+-- See the LICENSE file for terms of use.
 
 describe("LRU cache", function()
 
