@@ -2,7 +2,9 @@
 -- Copyright (c) 2015 Boris Nagaev
 -- See the LICENSE file for terms of use.
 
-local function lru(max_size, max_bytes)
+local lru = {}
+
+function lru.new(max_size, max_bytes)
 
     -- current size
     local size = 0

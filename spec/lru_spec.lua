@@ -10,12 +10,12 @@ describe("LRU cache", function()
 
     it("creates lru", function()
         local lru = require 'lru'
-        local l = lru(100)
+        local l = lru.new(100)
     end)
 
     it("is a map", function()
         local lru = require 'lru'
-        local l = lru(100)
+        local l = lru.new(100)
         l:set("foo", "bar")
         assert.equal("bar", l:get("foo"))
         l:set("foo", "bar1") -- change value
@@ -24,7 +24,7 @@ describe("LRU cache", function()
 
     it("resets key", function()
         local lru = require 'lru'
-        local l = lru(100)
+        local l = lru.new(100)
         l:set("foo", "bar")
         assert.equal("bar", l:get("foo"))
         l:set("foo", nil)
@@ -33,7 +33,7 @@ describe("LRU cache", function()
 
     it("iterates all elements", function()
         local lru = require 'lru'
-        local l = lru(100)
+        local l = lru.new(100)
         l:set("foo", "bar")
         l:set("foo1", "bar1")
         local map = {}
@@ -52,7 +52,7 @@ describe("LRU cache", function()
 
     it("eliminates old elements", function()
         local lru = require 'lru'
-        local l = lru(3)
+        local l = lru.new(3)
         l:set(1, 1)
         assert.equal(1, l:get(1))
         l:set(2, 2)
@@ -95,7 +95,7 @@ describe("LRU cache", function()
     it("doesn't leak memory #slow", function()
         -- add many large strings (~100Gb)
         local lru = require 'lru'
-        local l = lru(3)
+        local l = lru.new(3)
         local mib = ('x'):rep(1000000)
         for i = 1, 100000 do
             local key = i
@@ -106,7 +106,7 @@ describe("LRU cache", function()
 
     it("frees a slot when removing an element", function()
         local lru = require 'lru'
-        local l = lru(3)
+        local l = lru.new(3)
         l:set(1, 1)
         l:set(2, 2)
         l:set(3, 3)
@@ -120,7 +120,7 @@ describe("LRU cache", function()
 
     it("has method `delete`", function()
         local lru = require 'lru'
-        local l = lru(3)
+        local l = lru.new(3)
         l:set(1, 1)
         l:set(2, 2)
         l:set(3, 3)
@@ -134,7 +134,7 @@ describe("LRU cache", function()
 
     it("optionally counts size in bytes", function()
         local lru = require 'lru'
-        local l = lru(3, 100)
+        local l = lru.new(3, 100)
         l:set(1, 1, 50)
         l:set(2, 2, 50)
         l:set(3, 3, 50)
@@ -145,7 +145,7 @@ describe("LRU cache", function()
 
     it("size in bytes is #length by default", function()
         local lru = require 'lru'
-        local l = lru(3, 10)
+        local l = lru.new(3, 10)
         l:set(1, "12345")
         l:set(2, "67890")
         l:set(3, "x")
@@ -156,7 +156,7 @@ describe("LRU cache", function()
 
     it("throws if an element is too #large", function()
         local lru = require 'lru'
-        local l = lru(3, 10)
+        local l = lru.new(3, 10)
         assert.has_error(function()
             l:set(1, "12345678901")
         end)
