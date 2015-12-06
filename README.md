@@ -47,11 +47,20 @@ Methods:
 
     If `value` is `nil`, it doesn't occupy a slot.
 
+    Complexity:
+
+      * O(1) if cache doesn't have `size_in_bytes` limit,
+      * amortized O(1) if cache has `size_in_bytes` limit.
+
   * `cache:get(key)` returns the value corresponding to the key.
     If `key` is not in `cache`, returns `nil`.
     Otherwise moves the element to the head of the queue.
 
+    Complexity: O(1).
+
   * `cache:delete(key)` same as `cache:set(key, nil)`
+
+    Complexity: O(1).
 
   * `cache:pairs()` returns key-value iterator. Example:
 
@@ -65,6 +74,11 @@ Methods:
         ...
     end
     ```
+
+    Complexity:
+
+      * O(1) to create an iterator,
+      * O(cache size) to visit all elements.
 
 ## Comparison with other implementations
 
