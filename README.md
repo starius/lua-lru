@@ -129,27 +129,27 @@ LuaJIT 2.0.3 -- Copyright (C) 2005-2014 Mike Pall. http://luajit.org/
 --------
 no cache
 
-real    0m0.086s
-user    0m0.080s
-sys     0m0.004s
+real    0m0.077s
+user    0m0.076s
+sys     0m0.000s
 --------
 lua-lru
 
-real    0m3.901s
-user    0m3.884s
+real    0m2.217s
+user    0m2.204s
 sys     0m0.008s
 --------
 LuaRestyLrucacheLibrary.lrucache
 
-real    0m4.806s
-user    0m4.788s
-sys     0m0.008s
+real    0m5.285s
+user    0m5.260s
+sys     0m0.000s
 --------
 LuaRestyLrucacheLibrary.pureffi
 
-real    0m6.195s
-user    0m6.164s
-sys     0m0.016s
+real    0m8.737s
+user    0m8.485s
+sys     0m0.008s
 --------
 LRUCache.lua
 ... too slow, waited for 10 hours
@@ -159,8 +159,7 @@ Both `lua-lru` and `resty-lru` are compiled by LuaJIT perfectly:
 
 ```
 $ luajit -jp=v benchmark.lua lru
-75%  Compiled
-24%  Garbage Collector
+99%  Compiled
 
 $ luajit -jp=v benchmark.lua lrucache
 92%  Compiled
