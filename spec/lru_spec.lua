@@ -104,6 +104,42 @@ describe("LRU cache", function()
         end
     end)
 
+    it("does #remember elements", function()
+        math.randomseed(0)
+        local lru = require 'lru'
+        local MAX_KEY = 10000000
+        local N = 1000
+        local M = 100
+        local cache = lru.new(M)
+        local ring = {}
+        for i = 0, N do
+            local key = math.random(1, MAX_KEY)
+            cache:set(key, key * 2)
+            ring[i % M + 1] = key
+            local all_keys_map = {}
+            for k, v in cache:pairs() do
+                all_keys_map[k] = v
+            end
+            for _, k in ipairs(ring) do
+                assert.equal(2 * k, all_keys_map[k])
+            end
+        end
+    end)
+
+    it("removes elemenets in #fifo order", function()
+        local lru = require 'lru'
+        local cache = lru.new(10)
+        local elements = {
+            849811,  9140878, 3135321, 3071444,
+            4098914, 5635468, 3525615, 9220377,
+            2702523, 3699515, 9011105, 2966237,
+        }
+        for _, e in ipairs(elements) do
+            cache:set(e, true)
+        end
+        assert.equal(true, cache:get(3135321))
+    end)
+
     it("frees a slot when removing an element", function()
         local lru = require 'lru'
         local l = lru.new(3)
