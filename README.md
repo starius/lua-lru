@@ -20,14 +20,14 @@ the number of elements.
 Create an instance of LRU cache for 100 elements:
 
 ```lua
-lru = require 'lru`
+lru = require 'lru'
 cache = lru.new(100)
 ```
 
 Create an instance of LRU cache for 100 elements of 1000 bytes:
 
 ```lua
-lru = require 'lru`
+lru = require 'lru'
 cache = lru.new(100, 1000)
 ```
 
