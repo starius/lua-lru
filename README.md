@@ -129,44 +129,30 @@ LuaJIT 2.0.3 -- Copyright (C) 2005-2014 Mike Pall. http://luajit.org/
 --------
 no cache
 
-real    0m1.129s
-user    0m1.124s
-sys     0m0.000s
+real    0m0.086s
+user    0m0.080s
+sys     0m0.004s
 --------
 lua-lru
 
-real    0m7.812s
-user    0m7.616s
-sys     0m0.176s
+real    0m3.901s
+user    0m3.884s
+sys     0m0.008s
 --------
 LuaRestyLrucacheLibrary.lrucache
 
-real    0m10.751s
-user    0m10.729s
-sys     0m0.000s
+real    0m4.806s
+user    0m4.788s
+sys     0m0.008s
 --------
 LuaRestyLrucacheLibrary.pureffi
 
-real    0m15.833s
-user    0m15.797s
-sys     0m0.004s
+real    0m6.195s
+user    0m6.164s
+sys     0m0.016s
 --------
 LRUCache.lua
 ... too slow, waited for 10 hours
-```
-
-`lua-lru` does many memory allocations, that is why `sys` is
-0m0.176s. This is verified by `strace`:
-
-```
-$ strace luajit benchmark.lua lru 2> lru.strace
-$ strace luajit benchmark.lua lrucache 2> lrucache.strace
-$ wc -l lru.strace lrucache.strace | head -2
-  3763 lru.strace
-   113 lrucache.strace
-grep mmap -c lru.strace lrucache.strace
-lru.strace:2714
-lrucache.strace:23
 ```
 
 [license]: https://img.shields.io/badge/License-MIT-brightgreen.png

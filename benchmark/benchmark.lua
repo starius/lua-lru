@@ -31,22 +31,15 @@ if impl == 'LRUCache' then
     end
 end
 
-
-local function genTestData()
-    return coroutine.wrap(function()
-        for i = 1, 1000000 do
-            for j = 1, 5 do
-                coroutine.yield(math.random(1, 10000))
-            end
-            for j = 1, 5 do
-                coroutine.yield(math.random(1, 1000))
-            end
-        end
-    end)
-end
-
 local cache = lru.new(1000)
 
-for x in genTestData() do
-    cache:set(x, x+1)
+for i = 1, 1000000 do
+    for j = 1, 5 do
+        local x = math.random(1, 10000)
+        cache:set(x, x+1)
+    end
+    for j = 1, 5 do
+        local x = math.random(1, 1000)
+        cache:set(x, x+1)
+    end
 end
