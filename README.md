@@ -167,6 +167,9 @@ LRUCache.lua
 Both `lua-lru` and `resty-lru` are compiled by LuaJIT perfectly:
 
 ```
+$ luajit -v
+LuaJIT 2.1.0-alpha -- Copyright (C) 2005-2015 Mike Pall. http://luajit.org/
+
 $ luajit -jp=v benchmark.lua lru
 99%  Compiled
 
