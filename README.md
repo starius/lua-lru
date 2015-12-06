@@ -155,6 +155,20 @@ LRUCache.lua
 ... too slow, waited for 10 hours
 ```
 
+`lua-lru` does many memory allocations, that is why `sys` is
+0m0.176s. This is verified by `strace`:
+
+```
+$ strace luajit benchmark.lua lru 2> lru.strace
+$ strace luajit benchmark.lua lrucache 2> lrucache.strace
+$ wc -l lru.strace lrucache.strace | head -2
+  3763 lru.strace
+   113 lrucache.strace
+grep mmap -c lru.strace lrucache.strace
+lru.strace:2714
+lrucache.strace:23
+```
+
 [license]: https://img.shields.io/badge/License-MIT-brightgreen.png
 [travis]: https://travis-ci.org/starius/lua-lru
 [build-status]: https://travis-ci.org/starius/lua-lru.png
