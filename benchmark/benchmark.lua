@@ -17,7 +17,10 @@ else
         new = function()
             return {
                 set = function()
-                end
+                end,
+                get = function(_, x)
+                    return x+1
+                end,
             }
         end
     }
