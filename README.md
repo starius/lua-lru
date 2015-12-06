@@ -4,6 +4,12 @@
 [![Coverage Status][coveralls-badge]][coveralls-page]
 [![License][license]](LICENSE)
 
+Install:
+
+```
+$ luarocks install lua-lru
+```
+
 LRU cache:
 
 ![LRU cache](https://i.imgur.com/TKuaXlo.png)
