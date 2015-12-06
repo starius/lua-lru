@@ -35,7 +35,7 @@ Methods:
   * cache:set(key, value, size_in_bytes)
   * cache:get(key)
   * cache:delete(key)
-  * cache:pairs()
+  * cache:pairs() or pairs(cache) for Lua >= 5.2
 ]],
 }
 dependencies = {
