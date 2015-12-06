@@ -66,8 +66,63 @@ Methods:
     end
     ```
 
+## Comparison with other implementations
+
+I have found two other implementations of LRU in Lua.
+
+  * [lua-resty-lrucache][resty-lru] uses FFI.
+  * [Lua-LRU-Cache][Lua-LRU-Cache] is written in pure Lua
+    but turned out to be rather slow.
+
+Both `lua-resty-lrucache` and `Lua-LRU-Cache` provide `ttl`
+for the elements, but do not provide `size_in_bytes`.
+
+This library (`lua-lru`) seems to be faster than
+`lua-resty-lrucache` and `Lua-LRU-Cache`.
+
+The benchmark runs `cache:set` with random keys 1kk times,
+alternating ranges [1;1000] and [1;10000] with period 5.
+Source of the benchmark can be found in `benchmark/` directory.
+
+Results:
+
+```
+$ ./benchmark.sh
+
+LuaJIT 2.0.3 -- Copyright (C) 2005-2014 Mike Pall. http://luajit.org/
+--------
+no cache
+
+real    0m1.129s
+user    0m1.124s
+sys     0m0.000s
+--------
+lua-lru
+
+real    0m7.812s
+user    0m7.616s
+sys     0m0.176s
+--------
+LuaRestyLrucacheLibrary.lrucache
+
+real    0m10.751s
+user    0m10.729s
+sys     0m0.000s
+--------
+LuaRestyLrucacheLibrary.pureffi
+
+real    0m15.833s
+user    0m15.797s
+sys     0m0.004s
+--------
+LRUCache.lua
+... too slow
+```
+
 [license]: https://img.shields.io/badge/License-MIT-brightgreen.png
 [travis]: https://travis-ci.org/starius/lua-lru
 [build-status]: https://travis-ci.org/starius/lua-lru.png
 [coveralls-page]: https://coveralls.io/github/starius/lua-lru
 [coveralls-badge]: https://coveralls.io/repos/starius/lua-lru/badge.png?service=github
+[resty-lru]: https://github.com/openresty/lua-resty-lrucache
+[Lua-LRU-Cache]: https://github.com/kenshinx/Lua-LRU-Cache
