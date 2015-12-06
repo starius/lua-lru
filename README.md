@@ -24,7 +24,8 @@ lru = require 'lru'
 cache = lru.new(100)
 ```
 
-Create an instance of LRU cache for 100 elements of 1000 bytes:
+Create an instance of LRU cache for 100 elements of
+1000 bytes totally:
 
 ```lua
 lru = require 'lru'
