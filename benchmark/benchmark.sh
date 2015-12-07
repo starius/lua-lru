@@ -27,6 +27,7 @@ echo '--------'
 echo 'LuaRestyLrucacheLibrary.pureffi'
 time luajit benchmark.lua pureffi
 
-echo '--------'
-echo 'LRUCache.lua'
-time luajit benchmark.lua LRUCache
+# takes too much time
+#echo '--------'
+#echo 'LRUCache.lua'
+#time luajit benchmark.lua LRUCache
