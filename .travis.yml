@@ -23,7 +23,7 @@ install:
 
 script:
   - busted -c
-  - '[[ "$LUA" = *"luajit"* ]] && cd benchmark && ./benchmark.sh && cd ..'
+  - if [[ "$LUA" = *"luajit"* ]]; then cd benchmark && ./benchmark.sh && cd ..; fi
 
 after_success:
   - luacov
