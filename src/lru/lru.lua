@@ -10,10 +10,10 @@ function lru.new(max_size, max_bytes)
     local size = 0
     local bytes_used = 0
 
-    -- storage is a hash mapping keys to tuples
+    -- map is a hash map from keys to tuples
     -- tuple: value, prev, next, key
     -- prev and next are pointers to tuples
-    local storage = {}
+    local map = {}
 
     -- indices of tuple
     local VALUE = 1
@@ -65,7 +65,7 @@ function lru.new(max_size, max_bytes)
     end
 
     local function del(key, tuple)
-        storage[key] = nil
+        map[key] = nil
         cut(tuple)
         size = size - 1
         bytes_used = bytes_used - (tuple[BYTES] or 0)
@@ -84,7 +84,7 @@ function lru.new(max_size, max_bytes)
     end
 
     local function get(_, key)
-        local tuple = storage[key]
+        local tuple = map[key]
         if not tuple then
             return nil
         end
@@ -94,7 +94,7 @@ function lru.new(max_size, max_bytes)
     end
 
     local function set(_, key, value, bytes)
-        local tuple = storage[key]
+        local tuple = map[key]
         if tuple then
             del(key, tuple)
         end
@@ -109,7 +109,7 @@ function lru.new(max_size, max_bytes)
             size = size + 1
             bytes_used = bytes_used + bytes
             setNewest(tuple1)
-            storage[key] = tuple1
+            map[key] = tuple1
         end
         removed_tuple = nil
     end
@@ -121,7 +121,7 @@ function lru.new(max_size, max_bytes)
     local function mynext(_, prev_key)
         local tuple
         if prev_key then
-            tuple = storage[prev_key][NEXT]
+            tuple = map[prev_key][NEXT]
         else
             tuple = newest
         end
