@@ -99,12 +99,14 @@ Both `lua-resty-lrucache` and `Lua-LRU-Cache` provide `ttl`
 for the elements, but do not provide `size_in_bytes`.
 
 This library (`lua-lru`) seems to be faster than
-`lua-resty-lrucache` and `Lua-LRU-Cache`.
+`lua-resty-lrucache.lrucache` and `Lua-LRU-Cache`.
+`LuaRestyLrucacheLibrary.pureffi` has faster `cache:get`,
+but slower `cache:set`.
 
-The benchmark runs `cache:set` with random keys 1kk times,
+The benchmark runs `cache:get` with random keys 1kk times,
 alternating ranges [1;1000] and [1;10000] with period 5.
-After [1;10000] range it calls `cache:get(key)` with last
-key from [1;1000] range and checks returned value.
+In case of cache hit it compares the cached value with
+the expected value. Otherwise it calls `cache:set`.
 Source of the benchmark can be found in `benchmark/` directory.
 
 Results:
@@ -138,27 +140,27 @@ LuaJIT 2.0.3 -- Copyright (C) 2005-2014 Mike Pall. http://luajit.org/
 --------
 no cache
 
-real    0m0.077s
-user    0m0.076s
+real    0m0.219s
+user    0m0.216s
 sys     0m0.000s
 --------
 lua-lru
 
-real    0m2.217s
-user    0m2.204s
-sys     0m0.008s
+real    0m15.670s
+user    0m15.641s
+sys     0m0.000s
 --------
 LuaRestyLrucacheLibrary.lrucache
 
-real    0m5.285s
-user    0m5.260s
-sys     0m0.000s
+real    0m32.042s
+user    0m31.982s
+sys     0m0.004s
 --------
 LuaRestyLrucacheLibrary.pureffi
 
-real    0m8.737s
-user    0m8.485s
-sys     0m0.008s
+real    0m8.286s
+user    0m8.269s
+sys     0m0.000s
 --------
 LRUCache.lua
 ... too slow, waited for 10 hours

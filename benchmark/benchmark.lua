@@ -36,16 +36,13 @@ end
 
 local cache = lru.new(1000)
 
-for i = 1, 1000000 do
-    local key
-    for j = 1, 5 do
-        local x = math.random(1, 10000)
-        cache:set(x, x+1)
-        key = x
-    end
-    for j = 1, 5 do
-        local x = math.random(1, 1000)
+for i = 1, 10000000 do
+    local max = (i % 10 < 5) and 10000 or 1000
+    local x = math.random(1, 10000)
+    local v = cache:get(x)
+    if v then
+        assert(v == x + 1)
+    else
         cache:set(x, x+1)
     end
-    assert(cache:get(key) == key+1)
 end
