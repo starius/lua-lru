@@ -84,6 +84,7 @@ function lru.new(max_size, max_bytes)
     end
 
     local function get(_, key)
+        assert(key ~= nil, "Key may not be nil")
         local tuple = map[key]
         if not tuple then
             return nil
@@ -94,6 +95,7 @@ function lru.new(max_size, max_bytes)
     end
 
     local function set(_, key, value, bytes)
+        assert(key ~= nil, "Key may not be nil")
         local tuple = map[key]
         if tuple then
             del(key, tuple)
