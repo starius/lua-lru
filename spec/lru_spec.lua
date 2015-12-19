@@ -210,12 +210,9 @@ describe("LRU cache", function()
         end)
     end)
 
-    it("throws if key is nil", function()
+    it("set(), delete() throws if key is nil", function()
         local lru = require 'lru'
         local l = lru.new(100)
-        assert.has_error(function()
-            l:get(nil)
-        end)
         assert.has_error(function()
             l:set(nil, nil)
         end)
@@ -224,6 +221,14 @@ describe("LRU cache", function()
         end)
         assert.has_error(function()
             l:delete(nil)
+        end)
+    end)
+
+    it("get() doesn't throw if key is nil", function()
+        local lru = require 'lru'
+        local l = lru.new(100)
+        assert.has_no_error(function()
+            l:get(nil)
         end)
     end)
 
