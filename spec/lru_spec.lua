@@ -228,7 +228,7 @@ describe("LRU cache", function()
         local lru = require 'lru'
         local l = lru.new(100)
         assert.has_no_error(function()
-            l:get(nil)
+            assert.equal(nil, l:get(nil))
         end)
     end)
 
