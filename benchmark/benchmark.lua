@@ -38,7 +38,7 @@ local cache = lru.new(1000)
 
 for i = 1, 10000000 do
     local max = (i % 10 < 5) and 10000 or 1000
-    local x = math.random(1, 10000)
+    local x = math.random(1, max)
     local v = cache:get(x)
     if v then
         assert(v == x + 1)

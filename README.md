@@ -99,9 +99,7 @@ Both `lua-resty-lrucache` and `Lua-LRU-Cache` provide `ttl`
 for the elements, but do not provide `size_in_bytes`.
 
 This library (`lua-lru`) seems to be faster than
-`lua-resty-lrucache.lrucache` and `Lua-LRU-Cache`.
-`LuaRestyLrucacheLibrary.pureffi` has faster `cache:get`,
-but slower `cache:set`.
+`lua-resty-lrucache` and `Lua-LRU-Cache`.
 
 The benchmark runs `cache:get` with random keys 1kk times,
 alternating ranges [1;1000] and [1;10000] with period 5.
@@ -146,20 +144,20 @@ sys     0m0.000s
 --------
 lua-lru
 
-real    0m15.670s
-user    0m15.641s
+real    0m2.747s
+user    0m2.724s
 sys     0m0.000s
 --------
 LuaRestyLrucacheLibrary.lrucache
 
-real    0m32.042s
-user    0m31.982s
+real    0m5.403s
+user    0m5.384s
 sys     0m0.004s
 --------
 LuaRestyLrucacheLibrary.pureffi
 
-real    0m8.286s
-user    0m8.269s
+real    0m8.813s
+user    0m8.785s
 sys     0m0.000s
 --------
 LRUCache.lua
