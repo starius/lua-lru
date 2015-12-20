@@ -94,7 +94,6 @@ function lru.new(max_size, max_bytes)
     end
 
     local function set(_, key, value, bytes)
-        assert(key ~= nil, "Key may not be nil")
         local tuple = map[key]
         if tuple then
             del(key, tuple)
@@ -104,13 +103,15 @@ function lru.new(max_size, max_bytes)
             bytes = max_bytes and (bytes or #value) or 0
             makeFreeSpace(bytes)
             local tuple1 = removed_tuple or {}
+            map[key] = tuple1
             tuple1[VALUE] = value
             tuple1[KEY] = key
             tuple1[BYTES] = max_bytes and bytes
             size = size + 1
             bytes_used = bytes_used + bytes
             setNewest(tuple1)
-            map[key] = tuple1
+        else
+            assert(key ~= nil, "Key may not be nil")
         end
         removed_tuple = nil
     end
