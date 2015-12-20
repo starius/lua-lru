@@ -113,7 +113,7 @@ function lru.new(max_size, max_bytes)
 
         function elide(new_key, new_value)
             local removed_key = list[head + KEY]
-            remove(head, removed_key)
+            map[removed_key] = nil
             map[new_key] = head
             list[head + KEY] = new_key
             list[head + VALUE] = new_value
