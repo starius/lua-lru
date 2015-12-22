@@ -36,13 +36,21 @@ end
 
 local cache = lru.new(1000)
 
-for i = 1, 10000000 do
+local N = 10000000
+local hits = 0
+
+for i = 1, N do
     local max = (i % 10 < 5) and 10000 or 1000
     local x = math.random(1, max)
     local v = cache:get(x)
     if v then
+        hits = hits + 1
         assert(v == x + 1)
     else
         cache:set(x, x+1)
     end
 end
+
+print("Hits:", hits)
+print("Accesses:", N)
+print("Hit ratio:", ("%.1f%%"):format(100.0 * hits / N))
