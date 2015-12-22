@@ -22,6 +22,17 @@ describe("LRU cache", function()
         assert.equal("bar1", l:get("foo"))
     end)
 
+    it("works with max_size 1", function()
+        local lru = require 'lru'
+        for _, l in ipairs {lru.new(1), lru.new(1, 1)} do
+            l:set("foo", "foo", 1)
+            assert.equal("foo", l:get("foo"))
+            l:set("bar", "bar", 1)
+            assert.equal("bar", l:get("bar"))
+            assert.equal(nil, l:get("foo"))
+        end
+    end)
+
     it("resets key", function()
         local lru = require 'lru'
         local l = lru.new(100)
