@@ -26,6 +26,8 @@ else
     }
 end
 
+local misses = tonumber(arg[2]) or 5
+
 -- fix for Lua-LRU-Cache
 if impl == 'LRUCache' then
     lru.new0 = lru.new
@@ -40,7 +42,7 @@ local N = 10000000
 local hits = 0
 
 for i = 1, N do
-    local max = (i % 10 < 5) and 10000 or 1000
+    local max = (i % 10 < misses) and 10000 or 1000
     local x = math.random(1, max)
     local v = cache:get(x)
     if v then
