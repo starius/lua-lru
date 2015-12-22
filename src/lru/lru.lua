@@ -6,6 +6,10 @@ local lru = {}
 
 function lru.new(max_size, max_bytes)
 
+    assert(max_size >= 1, "max_size must be >= 1")
+    assert(not max_bytes or max_bytes >= 1,
+        "max_bytes must be >= 1")
+
     -- current size
     local size = 0
     local bytes_used = 0

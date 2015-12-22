@@ -33,6 +33,26 @@ describe("LRU cache", function()
         end
     end)
 
+    it("throws with max_size <= 0", function()
+        local lru = require 'lru'
+        assert.has_error(function()
+            lru.new(0)
+        end)
+        assert.has_error(function()
+            lru.new(-1)
+        end)
+    end)
+
+    it("throws with max_bytes <= 0", function()
+        local lru = require 'lru'
+        assert.has_error(function()
+            lru.new(1, 0)
+        end)
+        assert.has_error(function()
+            lru.new(1, -1)
+        end)
+    end)
+
     it("resets key", function()
         local lru = require 'lru'
         local l = lru.new(100)
