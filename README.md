@@ -2,6 +2,7 @@
 
 [![Build Status][build-status]][travis]
 [![Coverage Status][coveralls-badge]][coveralls-page]
+[![Luacheck](https://github.com/starius/lua-lru/workflows/Luacheck/badge.svg)](https://github.com/starius/lua-lru/actions)
 [![License][license]](LICENSE)
 
 Install:
