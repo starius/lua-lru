@@ -5,6 +5,7 @@
 local lru
 
 -- fix for resty.lrucache
+-- luacheck: globals ngx
 ngx = {
     now = os.clock
 }
