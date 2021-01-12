@@ -47,6 +47,10 @@ if [ "$LUAJIT" == "yes" ]; then
 
   cd $LUAJIT_BASE
 
+  if [ "$LUA" == "luajit2.0" ]; then
+    git checkout v2.0;
+  fi
+
   if [ "$LUA" == "luajit2.1" ]; then
     git checkout v2.1;
   fi
@@ -54,8 +58,11 @@ if [ "$LUAJIT" == "yes" ]; then
   make && make install PREFIX="$LUA_HOME_DIR"
 
   if [ "$LUA" == "luajit2.1" ]; then
-    ln -s $LUA_HOME_DIR/bin/luajit-2.1.0* $HOME/.lua/luajit
-    ln -s $LUA_HOME_DIR/bin/luajit-2.1.0* $HOME/.lua/lua;
+    ln -s $LUA_HOME_DIR/bin/luajit-2.1.* $HOME/.lua/luajit
+    ln -s $LUA_HOME_DIR/bin/luajit-2.1.* $HOME/.lua/lua;
+  elif [ "$LUA" == "luajit2.0" ]; then
+    ln -s $LUA_HOME_DIR/bin/luajit-2.0.* $HOME/.lua/luajit
+    ln -s $LUA_HOME_DIR/bin/luajit-2.0.* $HOME/.lua/lua;
   else
     ln -s $LUA_HOME_DIR/bin/luajit $HOME/.lua/luajit
     ln -s $LUA_HOME_DIR/bin/luajit $HOME/.lua/lua;
