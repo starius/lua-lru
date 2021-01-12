@@ -244,7 +244,6 @@ describe("LRU cache", function()
     it("set(), delete() throws if key is nil", function()
         local lru = require 'lru'
         for _, l in ipairs({lru.new(9), lru.new(9, 99)}) do
-            local l = lru.new(100)
             assert.has_error(function()
                 l:set(nil, nil)
             end)
